@@ -1,2 +1,2 @@
-google-adk>=2.0.0
+google-adk[gcp]>=2.0.0,<3.0.0
 google-cloud-firestore>=2.21.0

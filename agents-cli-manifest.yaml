@@ -1,0 +1,5 @@
+name: proofline-agent
+agent_directory: proofline
+create_params:
+  deployment_target: cloud_run
+  session_type: in_memory
