@@ -54,6 +54,20 @@ The credential-free ADK API preflight, measured endpoint results, and exact
 reproduction commands are recorded in
 [`docs/local-api-evidence.md`](docs/local-api-evidence.md).
 
+## Live deployment
+
+Proofline is live on Google Cloud Run in `europe-west1`:
+
+<https://proofline-343140361830.europe-west1.run.app>
+
+The public ADK API is deployed as revision `proofline-00001-rqw` with zero
+minimum instances, one maximum instance, 512 MiB memory, one CPU, concurrency
+20, and startup CPU boost disabled. On 2026-08-05 an external verification
+returned `HTTP 200` and `["proofline"]` from `/list-apps`, created a real ADK
+session, invoked Gemini 3.6 Flash, called the deterministic `evaluate_packet`
+tool, and returned `READY` with packet hash
+`973750f90ceffd925eba6716399f9064fcc789522ae8455efe764ef6c841eb5d`.
+
 ## Planned hosted flow
 
 ```text
@@ -72,11 +86,12 @@ No customer data is included in the repository. Demo fixtures are synthetic.
   retry-configured Gemini model and an `agents-cli` Cloud Run manifest.
 - Cloud Run container: reproducible root `Dockerfile` starts the ADK API server
   on the platform-provided port and excludes local secrets from the image.
-- Firestore, Pub/Sub, and Cloud Run: documented deployment architecture; cloud
-  resources are intentionally not provisioned in this repository.
+- Cloud Run: publicly deployed and verified end to end with Gemini and the
+  deterministic evidence gate. Firestore and Pub/Sub remain documented
+  extension points and are not required by the current in-memory demo.
 - Devpost project: public at <https://devpost.com/software/proofline-65a8t4>;
   the official hackathon submission remains a draft and no prize or revenue is
   claimed.
 - Demo preparation: the 3:45-4:00 recording plan is in
-  [`docs/demo-video.md`](docs/demo-video.md). Its cloud segment must be replaced
-  with real deployment evidence before publication.
+  [`docs/demo-video.md`](docs/demo-video.md). The live Cloud Run evidence above
+  is the authoritative source for its hosted segment.
