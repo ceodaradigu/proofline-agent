@@ -70,6 +70,8 @@ No customer data is included in the repository. Demo fixtures are synthetic.
 - Google ADK agent: implemented with a guarded local-development import.
 - ADK serving application: exported through the current `App` wrapper with a
   retry-configured Gemini model and an `agents-cli` Cloud Run manifest.
+- Cloud Run container: reproducible root `Dockerfile` starts the ADK API server
+  on the platform-provided port and excludes local secrets from the image.
 - Firestore, Pub/Sub, and Cloud Run: documented deployment architecture; cloud
   resources are intentionally not provisioned in this repository.
 - Devpost project: public at <https://devpost.com/software/proofline-65a8t4>;

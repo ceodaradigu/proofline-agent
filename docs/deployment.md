@@ -51,7 +51,24 @@ discovery and the HTTP surface, not model credentials or cloud deployment.
 
 ## Cloud Run
 
-After replacing the placeholders with the holder-approved project and region:
+The repository root contains a production-shaped `Dockerfile`. It launches the
+ADK API server on Cloud Run's runtime-provided `PORT`, copies only the agent
+package into the image, and excludes local credentials, test artifacts, and
+video assets from the build context.
+
+After replacing the placeholders with the holder-approved project and region,
+the container can be built and deployed directly from source:
+
+```bash
+gcloud run deploy proofline \
+  --source=. \
+  --project=YOUR_PROJECT_ID \
+  --region=YOUR_REGION \
+  --allow-unauthenticated \
+  --set-env-vars=GOOGLE_GENAI_USE_VERTEXAI=TRUE,GOOGLE_CLOUD_PROJECT=YOUR_PROJECT_ID,GOOGLE_CLOUD_LOCATION=global
+```
+
+Alternatively, ADK's deployment command remains available:
 
 ```bash
 adk deploy cloud_run \
@@ -64,3 +81,14 @@ The deployment folder includes `agent.py`, `root_agent`, `__init__.py`, and
 `requirements.txt`, matching ADK discovery requirements. Firestore and Pub/Sub
 are architectural integration points for the hosted version; the current local
 demo does not create billable resources or claim they are already provisioned.
+
+After deployment, verify the public surface before recording demo evidence:
+
+```bash
+curl -fsS "https://YOUR_SERVICE_URL/health"
+curl -fsS "https://YOUR_SERVICE_URL/list-apps"
+curl -fsS "https://YOUR_SERVICE_URL/apps/proofline/app-info"
+```
+
+The final demo must show the real `.run.app` URL and a corresponding Cloud Run
+log entry. Do not replace the draft cloud segment until those checks succeed.

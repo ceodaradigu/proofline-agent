@@ -1,0 +1,14 @@
+.git
+.gitignore
+.venv
+.tmp-adk
+__pycache__
+*.py[cod]
+.pytest_cache
+.env
+assets
+docs
+scripts
+tests
+video
+*.mp4
