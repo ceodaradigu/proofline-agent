@@ -37,7 +37,13 @@ can inspect and test its safety boundary locally.
 ```bash
 python -m unittest discover -s tests -v
 python sample_run.py
+python demo_matrix.py
 ```
+
+`demo_matrix.py` renders one deterministic packet for each possible decision:
+`NEEDS_EVIDENCE`, `CONFLICT`, `APPROVAL_REQUIRED`, and `READY`. It uses only
+synthetic public-safe fixtures and a fixed UTC evaluation time, so judges can
+reproduce the same four packet hashes without credentials or network access.
 
 The ADK agent folder follows Google's discovery convention and contains its own
 deployment requirements file. Deployment instructions are in

@@ -35,21 +35,21 @@ right.
 
 ```bash
 python -m unittest discover -s tests -v
-python sample_run.py
+python demo_matrix.py
 ```
 
-Pause on the six passing tests, then show the important fields in the sample
-output: `status`, `unmet`, `contradictions`, `external_action_requested`,
-`human_approved`, and `digest`.
+Pause on the passing tests, then scroll through the four deterministic outcomes:
+`NEEDS_EVIDENCE`, `CONFLICT`, `APPROVAL_REQUIRED`, and `READY`. Show the
+important fields: `unmet`, `conflicts`, `external_action_requested`,
+`human_approved`, and `packet_hash`.
 
 **Narration:**
 
-> The verification core is intentionally small and testable. These tests cover
-> missing evidence, stale evidence, contradictions, deterministic hashing, the
-> approval gate, and the ready state. In this synthetic run every substantive
-> requirement passes, but an external action was requested without human
-> approval. Proofline therefore returns APPROVAL_REQUIRED instead of pretending
-> the task is finished. The SHA-256 digest addresses the exact canonical packet.
+> The verification core is intentionally small and testable. These synthetic,
+> fixed-time scenarios show every possible decision. Missing evidence cannot
+> pass. Conflicting authorities stop the workflow. Valid evidence with an
+> unapproved external action returns APPROVAL_REQUIRED. Only the final approved
+> packet is READY. Each SHA-256 hash addresses the exact canonical packet.
 
 ## 2:15-3:05 — ADK agent and safety boundary
 
