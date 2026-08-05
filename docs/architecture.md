@@ -2,16 +2,17 @@
 
 ```mermaid
 flowchart LR
-    U["Task contract"] --> A["Gemini 3.6 Flash + Google ADK"]
-    A --> Q["Pub/Sub verification jobs"]
-    Q --> S["Authoritative evidence sources"]
-    S --> G["Deterministic Proofline gate"]
+    C["Cloud Run API (deployed)"] --> A["Gemini 3.6 Flash + Google ADK"]
+    U["Task contract"] --> A
+    S["Authoritative evidence sources"] --> G["Deterministic Proofline gate"]
+    A --> G
     G -->|"missing, stale, or conflicting"| R["Request better evidence"]
-    G -->|"requirements satisfied"| F["Firestore proof packet"]
-    F --> H["Human approval boundary"]
+    G -->|"requirements satisfied"| P["Hash-addressed proof packet"]
+    P --> H["Human approval boundary"]
     H -->|"approved"| X["External action"]
-    H -->|"not approved"| P["APPROVAL_REQUIRED"]
-    C["Cloud Run API"] --> A
+    H -->|"not approved"| N["APPROVAL_REQUIRED"]
+    F["Firestore (planned)"] -.-> P
+    Q["Pub/Sub rechecks (planned)"] -.-> S
 ```
 
 The language model decomposes and explains work, but it cannot override the
