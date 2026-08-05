@@ -50,6 +50,10 @@ deployment requirements file. Deployment instructions are in
 [`docs/deployment.md`](docs/deployment.md), and the system diagram is in
 [`docs/architecture.md`](docs/architecture.md).
 
+The credential-free ADK API preflight, measured endpoint results, and exact
+reproduction commands are recorded in
+[`docs/local-api-evidence.md`](docs/local-api-evidence.md).
+
 ## Planned hosted flow
 
 ```text
