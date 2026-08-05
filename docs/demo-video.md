@@ -66,17 +66,17 @@ portion of `proofline/core.py`.
 
 ## 3:05-3:35 — Google Cloud deployment evidence
 
-**Screen:** Replace this section only with real evidence after deployment: the
-Cloud Run service page or public service URL, one successful request, the
-corresponding log entry, and the Firestore packet document. Never simulate this
-section or claim resources that do not exist.
+**Screen:** Show the public Cloud Run URL and the secret-free verification
+record in the repository: revision, HTTP 200 discovery/session results, the
+Gemini tool call, decision, evidence count, and packet hash. Do not claim
+Firestore persistence or Pub/Sub execution; they remain extension points.
 
 **Narration template:**
 
-> This is the live Proofline service on Google Cloud Run. The request is handled
-> by the ADK application, and the resulting proof packet is stored in Firestore.
-> Pub/Sub is used for asynchronous verification work. The deployment evidence
-> and reproducible commands are linked in the public repository.
+> This is the live Proofline service on Google Cloud Run. An external request
+> discovered the ADK application, created a real session, invoked Gemini 3.6
+> Flash, and called the deterministic evidence tool. The resulting READY packet
+> hash and the exact deployment evidence are recorded in the public repository.
 
 ## 3:35-3:55 — Close
 
@@ -89,7 +89,7 @@ section or claim resources that do not exist.
 
 ## Publication checklist
 
-- Show real Google Cloud deployment evidence before recording section 3:05.
+- Show only the real Google Cloud evidence recorded in the repository.
 - Keep the final video under four minutes.
 - Add visible captions and an AI-assisted-production disclosure.
 - Verify that no credentials, tokens, email addresses, or private tabs appear.

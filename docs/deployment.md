@@ -91,4 +91,6 @@ curl -fsS "https://YOUR_SERVICE_URL/apps/proofline/app-info"
 ```
 
 The final demo must show the real `.run.app` URL and a corresponding Cloud Run
-log entry. Do not replace the draft cloud segment until those checks succeed.
+log entry. The checks succeeded on 2026-08-05; the final demo script now uses
+only the recorded public-safe results and does not claim the planned Firestore
+or Pub/Sub extensions are active.

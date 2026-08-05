@@ -8,7 +8,7 @@ $repoPath = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $scriptPath = Join-Path $repoPath "video\script.json"
 $imagePath = Join-Path $repoPath "devpost-thumbnail.png"
 $buildPath = Join-Path $repoPath "video\build"
-$outputPath = Join-Path $repoPath "video\proofline-demo-draft.mp4"
+$outputPath = Join-Path $repoPath "video\proofline-demo-final.mp4"
 
 $ffmpeg = (Get-Command ffmpeg -ErrorAction Stop).Source
 $ffprobe = (Get-Command ffprobe -ErrorAction Stop).Source
@@ -66,7 +66,7 @@ $assLines.Add("[Events]")
 $assLines.Add("Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text")
 
 $totalDuration = ($durations | Measure-Object -Sum).Sum
-$assLines.Add("Dialogue: 0,0:00:00.00,$(Format-AssTime $totalDuration),Disclosure,,0,0,0,,AI-assisted production | Synthetic fixtures | Cloud deployment not yet claimed")
+$assLines.Add("Dialogue: 0,0:00:00.00,$(Format-AssTime $totalDuration),Disclosure,,0,0,0,,AI-assisted production | Synthetic fixtures clearly identified | Live Cloud Run deployment verified")
 
 $cursor = 0.0
 for ($index = 0; $index -lt $segments.Count; $index++) {
