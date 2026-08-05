@@ -62,4 +62,9 @@ No customer data is included in the repository. Demo fixtures are synthetic.
   retry-configured Gemini model and an `agents-cli` Cloud Run manifest.
 - Firestore, Pub/Sub, and Cloud Run: documented deployment architecture; cloud
   resources are intentionally not provisioned in this repository.
-- Devpost submission: not yet submitted; no prize or revenue is claimed.
+- Devpost project: public at <https://devpost.com/software/proofline-65a8t4>;
+  the official hackathon submission remains a draft and no prize or revenue is
+  claimed.
+- Demo preparation: the 3:45-4:00 recording plan is in
+  [`docs/demo-video.md`](docs/demo-video.md). Its cloud segment must be replaced
+  with real deployment evidence before publication.
