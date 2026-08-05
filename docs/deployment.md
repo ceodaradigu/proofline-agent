@@ -29,6 +29,26 @@ adk web
 Set `GEMINI_MODEL` only when a different eligible Gemini model is required. The
 default is `gemini-3.6-flash`.
 
+## Credential-free API preflight
+
+The application can be loaded and its API contract inspected without invoking
+Gemini or creating cloud resources:
+
+```bash
+adk api_server \
+  --host 127.0.0.1 \
+  --port 8765 \
+  --session_service_uri memory:// \
+  --artifact_service_uri memory:// \
+  --memory_service_uri memory:// \
+  proofline
+```
+
+Then request `/health`, `/list-apps`, `/apps/proofline/app-info`, and
+`/openapi.json`. The measured 2026-08-05 result is recorded in
+[`local-api-evidence.md`](local-api-evidence.md). This check validates ADK
+discovery and the HTTP surface, not model credentials or cloud deployment.
+
 ## Cloud Run
 
 After replacing the placeholders with the holder-approved project and region:
