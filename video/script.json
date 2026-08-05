@@ -1,0 +1,26 @@
+[
+  {
+    "title": "The problem: completion without proof",
+    "narration": "An agent saying done is not evidence that the work is complete. Marketplace listings go stale, deployments fail silently, and plausible answers can hide missing or contradictory facts. Proofline turns that acceptance boundary into something executable. It starts from a task contract, names each requirement, and refuses to call the work complete until fresh authoritative evidence supports every one."
+  },
+  {
+    "title": "Architecture: reasoning separated from acceptance",
+    "narration": "Proofline uses Gemini 3.6 Flash and Google Agent Development Kit to interpret requirements and explain results. Asynchronous evidence checks are designed for Pub Sub. Fresh evidence then reaches a small deterministic gate. The gate, not the language model, decides whether the packet needs evidence, contains a conflict, requires human approval, or is ready. Firestore is the planned durable packet store, and Cloud Run is the deployment target. External actions stay behind an explicit human approval boundary."
+  },
+  {
+    "title": "Reproducible decision matrix",
+    "narration": "The public repository includes a fixed-time synthetic demonstration of every possible decision. Missing evidence returns NEEDS EVIDENCE. Two fresh authoritative sources that disagree return CONFLICT. Valid evidence plus an unapproved external action returns APPROVAL REQUIRED. Only valid evidence with explicit approval returns READY. Each result includes a SHA 256 hash over the exact canonical packet. Seven focused tests cover the decision surface, stale and non-authoritative evidence, stable hashing, and the approval gate. No credentials or network access are needed to reproduce these results."
+  },
+  {
+    "title": "Real Google ADK application surface",
+    "narration": "This is not a slide-only mockup. Google ADK version 2.6.2 loads Proofline as a real Python application and root agent. Its Fast API server exposes health, discovery, session, artifact, run, and streaming routes. The app information endpoint identifies the evaluate packet tool and its JSON contract. In the credential-free preflight, health, list apps, app info, and the Open API document all returned HTTP 200. The server was stopped after validation, and every command and measured result is published in the repository."
+  },
+  {
+    "title": "Cloud evidence pending - never simulated",
+    "narration": "The final submission will replace this section only with real Google Cloud evidence: a Cloud Run service URL, a successful request, the corresponding log, and the stored packet when persistence is enabled. This draft does not claim that those resources exist. Proofline is designed to reject unsupported completion claims, so its own demo follows the same rule."
+  },
+  {
+    "title": "Proof before finish",
+    "narration": "Proofline does not make agents sound more certain. It makes their completion claims inspectable, tamper-evident, and safe to act on. The code, tests, decision matrix, architecture, and ADK preflight are public. Proof before finish."
+  }
+]
