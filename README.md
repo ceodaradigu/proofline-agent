@@ -58,6 +58,8 @@ No customer data is included in the repository. Demo fixtures are synthetic.
 
 - Deterministic evidence gate: implemented and covered by six unit tests.
 - Google ADK agent: implemented with a guarded local-development import.
+- ADK serving application: exported through the current `App` wrapper with a
+  retry-configured Gemini model and an `agents-cli` Cloud Run manifest.
 - Firestore, Pub/Sub, and Cloud Run: documented deployment architecture; cloud
   resources are intentionally not provisioned in this repository.
 - Devpost submission: not yet submitted; no prize or revenue is claimed.

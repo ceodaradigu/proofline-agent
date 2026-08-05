@@ -11,6 +11,11 @@ unless the account holder has approved the exact spend.
 3. The Google ADK CLI installed from `proofline/requirements.txt`.
 4. Vertex AI, Cloud Run, Firestore, and Pub/Sub APIs enabled in that project.
 
+The repository includes `agents-cli-manifest.yaml`, which identifies
+`proofline/` as the agent directory and Cloud Run as the intended deployment
+target. The exported `app` name matches that directory, as required by the
+current ADK application layout.
+
 ## Local ADK session
 
 From the repository root:
