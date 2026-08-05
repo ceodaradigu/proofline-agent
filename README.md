@@ -89,9 +89,10 @@ No customer data is included in the repository. Demo fixtures are synthetic.
 - Cloud Run: publicly deployed and verified end to end with Gemini and the
   deterministic evidence gate. Firestore and Pub/Sub remain documented
   extension points and are not required by the current in-memory demo.
-- Devpost project: public at <https://devpost.com/software/proofline-65a8t4>;
-  the official hackathon submission remains a draft and no prize or revenue is
-  claimed.
+- Devpost project: officially submitted to the All Things Agentic Hackathon at
+  <https://devpost.com/software/proofline-65a8t4>. The public 2:53 demo is at
+  <https://youtu.be/khPpdq7GcTk>. No prize or revenue is claimed unless an
+  organizer confirms an award and payment.
 - Demo preparation: the 3:45-4:00 recording plan is in
   [`docs/demo-video.md`](docs/demo-video.md). The live Cloud Run evidence above
   is the authoritative source for its hosted segment.
