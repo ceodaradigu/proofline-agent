@@ -1,0 +1,16 @@
+[project]
+name = "proofline-agent"
+version = "0.1.0"
+description = "Verification-first autonomous agent with tamper-evident proof packets"
+requires-python = ">=3.11"
+dependencies = [
+  "google-adk>=2.0.0",
+  "google-cloud-firestore>=2.21.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
