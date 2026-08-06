@@ -54,6 +54,9 @@ The credential-free ADK API preflight, measured endpoint results, and exact
 reproduction commands are recorded in
 [`docs/local-api-evidence.md`](docs/local-api-evidence.md).
 
+The contest-requirement matrix and public endpoint checks are recorded in
+[`docs/submission-evidence.md`](docs/submission-evidence.md).
+
 ## Live deployment
 
 Proofline is live on Google Cloud Run in `europe-west1`:
