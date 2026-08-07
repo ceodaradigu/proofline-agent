@@ -56,6 +56,36 @@ class VercelDeploymentOpsTests(unittest.TestCase):
         self.assertEqual(len(output["events"][0]["content_sha256"]), 64)
         self.assertNotIn("secretish log", repr(output))
 
+    def test_deployment_projection_omits_git_metadata(self) -> None:
+        response = handler.ApiResult(
+            {
+                "deployments": [
+                    {
+                        "uid": "dpl_1",
+                        "name": "demo",
+                        "url": "demo.vercel.app",
+                        "readyState": "READY",
+                        "creator": {"uid": "usr_1", "username": "operator", "email": "private@example.com"},
+                        "meta": {
+                            "githubCommitMessage": "do not copy this into a receipt",
+                            "githubCommitSha": "abc123",
+                            "githubRepo": "private-repository",
+                        },
+                    }
+                ],
+                "pagination": {"count": 1},
+            },
+            200,
+            1,
+        )
+        with patch.object(handler, "_request", return_value=response):
+            output = handler.list_deployments({}, {})
+        deployment = output["deployments"][0]
+        self.assertNotIn("meta", deployment)
+        self.assertEqual(deployment["creator"], {"uid": "usr_1", "username": "operator"})
+        self.assertNotIn("private@example.com", repr(output))
+        self.assertNotIn("private-repository", repr(output))
+
     def test_cancel_refuses_stale_state_without_writing(self) -> None:
         current = handler.ApiResult(
             {"id": "dpl_1", "url": "demo.vercel.app", "readyState": "READY"},
