@@ -437,7 +437,6 @@ def _safe_deployment(deployment: dict[str, Any]) -> dict[str, Any]:
             "ready",
             "readySubstate",
             "creator",
-            "meta",
             "alias",
         ),
         nested_limits={"alias": 20},
@@ -486,17 +485,6 @@ def _pick(
             item = item[: nested_limits[key]]
         if key == "creator" and isinstance(item, dict):
             item = _pick(item, ("uid", "username"))
-        elif key == "meta" and isinstance(item, dict):
-            item = _pick(
-                item,
-                (
-                    "githubCommitRef",
-                    "githubCommitSha",
-                    "githubCommitMessage",
-                    "githubRepo",
-                    "githubOrg",
-                ),
-            )
         elif key == "link" and isinstance(item, dict):
             item = _pick(item, ("type", "repo", "repoId", "org", "gitCredentialId"))
         elif key == "latestDeployments" and isinstance(item, list):
