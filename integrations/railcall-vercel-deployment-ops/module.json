@@ -1,0 +1,383 @@
+{
+  "manifest_version": 2,
+  "id": "relaunch-dept/vercel-deployment-ops",
+  "name": "Vercel Deployment Operations Airlock",
+  "version": "0.1.0",
+  "provider": "vercel",
+  "description": "Governed Vercel release operations: inspect projects, deployments, event metadata, files, and aliases; cancel or delete only after live-state checks and human approval. Credentials stay in RailCall's local vault. contest:2026Q3",
+  "homepage": "https://github.com/ceodaradigu/proofline-agent/tree/main/integrations/railcall-vercel-deployment-ops",
+  "auth": {
+    "type": "api_key",
+    "vault_provider": "vercel",
+    "field": "VERCEL_ACCESS_TOKEN"
+  },
+  "credential_spec": {
+    "provider": "vercel",
+    "category": "deployment",
+    "name": "Vercel",
+    "required": [
+      "VERCEL_ACCESS_TOKEN"
+    ],
+    "optional": [],
+    "shape": "dict",
+    "risk": "high",
+    "read_write": "write"
+  },
+  "requires": {
+    "network": [
+      "api.vercel.com"
+    ],
+    "subprocess": false,
+    "filesystem_writes": []
+  },
+  "commands": [
+    {
+      "id": "vercel.list_projects",
+      "title": "List Vercel projects",
+      "provider": "vercel",
+      "risk": "low",
+      "mode": "read",
+      "side_effects": "none",
+      "requires": [
+        "VERCEL_ACCESS_TOKEN"
+      ],
+      "preview": true,
+      "receipt_required": true,
+      "input_schema": {
+        "team_id": {
+          "type": "string",
+          "required": false,
+          "help": "Optional Vercel Team ID. Required when the token is scoped to a team."
+        },
+        "limit": {
+          "type": "integer",
+          "required": false,
+          "default": 20,
+          "help": "Number of projects to return, from 1 to 100."
+        },
+        "from": {
+          "type": "string",
+          "required": false,
+          "help": "Opaque pagination cursor returned by Vercel."
+        }
+      },
+      "output_schema": {
+        "projects": "array",
+        "pagination": "object",
+        "api_status": "number",
+        "attempts": "number"
+      }
+    },
+    {
+      "id": "vercel.get_project",
+      "title": "Get a Vercel project",
+      "provider": "vercel",
+      "risk": "low",
+      "mode": "read",
+      "side_effects": "none",
+      "requires": [
+        "VERCEL_ACCESS_TOKEN"
+      ],
+      "preview": true,
+      "receipt_required": true,
+      "input_schema": {
+        "project_id_or_name": {
+          "type": "string",
+          "required": true,
+          "help": "Vercel project ID or project name."
+        },
+        "team_id": {
+          "type": "string",
+          "required": false,
+          "help": "Optional Vercel Team ID."
+        }
+      },
+      "output_schema": {
+        "project": "object",
+        "api_status": "number",
+        "attempts": "number"
+      }
+    },
+    {
+      "id": "vercel.list_deployments",
+      "title": "List and filter Vercel deployments",
+      "provider": "vercel",
+      "risk": "low",
+      "mode": "read",
+      "side_effects": "none",
+      "requires": [
+        "VERCEL_ACCESS_TOKEN"
+      ],
+      "preview": true,
+      "receipt_required": true,
+      "input_schema": {
+        "team_id": {
+          "type": "string",
+          "required": false,
+          "help": "Optional Vercel Team ID."
+        },
+        "project_id": {
+          "type": "string",
+          "required": false,
+          "help": "Optional Vercel project ID filter."
+        },
+        "target": {
+          "type": "string",
+          "required": false,
+          "options": [
+            "production",
+            "preview"
+          ],
+          "help": "Optional deployment target filter."
+        },
+        "state": {
+          "type": "string",
+          "required": false,
+          "options": [
+            "BUILDING",
+            "CANCELED",
+            "ERROR",
+            "INITIALIZING",
+            "QUEUED",
+            "READY"
+          ],
+          "help": "Optional deployment state filter."
+        },
+        "limit": {
+          "type": "integer",
+          "required": false,
+          "default": 20,
+          "help": "Number of deployments to return, from 1 to 100."
+        },
+        "since": {
+          "type": "integer",
+          "required": false,
+          "help": "Only deployments created after this Unix timestamp in milliseconds."
+        },
+        "until": {
+          "type": "integer",
+          "required": false,
+          "help": "Only deployments created before this Unix timestamp in milliseconds."
+        }
+      },
+      "output_schema": {
+        "deployments": "array",
+        "pagination": "object",
+        "api_status": "number",
+        "attempts": "number"
+      }
+    },
+    {
+      "id": "vercel.get_deployment",
+      "title": "Get a Vercel deployment",
+      "provider": "vercel",
+      "risk": "low",
+      "mode": "read",
+      "side_effects": "none",
+      "requires": [
+        "VERCEL_ACCESS_TOKEN"
+      ],
+      "preview": true,
+      "receipt_required": true,
+      "input_schema": {
+        "deployment_id_or_url": {
+          "type": "string",
+          "required": true,
+          "help": "Deployment ID or deployment URL."
+        },
+        "team_id": {
+          "type": "string",
+          "required": false,
+          "help": "Optional Vercel Team ID."
+        }
+      },
+      "output_schema": {
+        "deployment": "object",
+        "api_status": "number",
+        "attempts": "number"
+      }
+    },
+    {
+      "id": "vercel.get_deployment_events",
+      "title": "Get privacy-safe Vercel deployment event metadata",
+      "provider": "vercel",
+      "risk": "low",
+      "mode": "read",
+      "side_effects": "none",
+      "requires": [
+        "VERCEL_ACCESS_TOKEN"
+      ],
+      "preview": true,
+      "receipt_required": true,
+      "input_schema": {
+        "deployment_id_or_url": {
+          "type": "string",
+          "required": true,
+          "help": "Deployment ID or deployment URL."
+        },
+        "team_id": {
+          "type": "string",
+          "required": false,
+          "help": "Optional Vercel Team ID."
+        },
+        "limit": {
+          "type": "integer",
+          "required": false,
+          "default": 50,
+          "help": "Maximum event records to request, from 1 to 100."
+        }
+      },
+      "output_schema": {
+        "events": "array",
+        "event_count": "number",
+        "content_omitted_from_receipt": "boolean",
+        "api_status": "number",
+        "attempts": "number"
+      }
+    },
+    {
+      "id": "vercel.list_deployment_files",
+      "title": "List Vercel deployment files",
+      "provider": "vercel",
+      "risk": "low",
+      "mode": "read",
+      "side_effects": "none",
+      "requires": [
+        "VERCEL_ACCESS_TOKEN"
+      ],
+      "preview": true,
+      "receipt_required": true,
+      "input_schema": {
+        "deployment_id": {
+          "type": "string",
+          "required": true,
+          "help": "Vercel deployment ID."
+        },
+        "team_id": {
+          "type": "string",
+          "required": false,
+          "help": "Optional Vercel Team ID."
+        }
+      },
+      "output_schema": {
+        "files": "array",
+        "api_status": "number",
+        "attempts": "number"
+      }
+    },
+    {
+      "id": "vercel.list_deployment_aliases",
+      "title": "List aliases assigned to a Vercel deployment",
+      "provider": "vercel",
+      "risk": "low",
+      "mode": "read",
+      "side_effects": "none",
+      "requires": [
+        "VERCEL_ACCESS_TOKEN"
+      ],
+      "preview": true,
+      "receipt_required": true,
+      "input_schema": {
+        "deployment_id": {
+          "type": "string",
+          "required": true,
+          "help": "Vercel deployment ID."
+        },
+        "team_id": {
+          "type": "string",
+          "required": false,
+          "help": "Optional Vercel Team ID."
+        }
+      },
+      "output_schema": {
+        "aliases": "array",
+        "api_status": "number",
+        "attempts": "number"
+      }
+    },
+    {
+      "id": "vercel.cancel_deployment",
+      "title": "Cancel a Vercel deployment after a live-state check",
+      "provider": "vercel",
+      "risk": "medium",
+      "mode": "write_requires_approval",
+      "side_effects": "external",
+      "requires": [
+        "VERCEL_ACCESS_TOKEN"
+      ],
+      "preview": true,
+      "receipt_required": true,
+      "input_schema": {
+        "deployment_id": {
+          "type": "string",
+          "required": true,
+          "help": "Vercel deployment ID, not a project name."
+        },
+        "expected_ready_state": {
+          "type": "string",
+          "required": true,
+          "options": [
+            "BUILDING",
+            "INITIALIZING",
+            "QUEUED"
+          ],
+          "help": "Exact state observed in vercel.get_deployment; stale approvals are refused."
+        },
+        "team_id": {
+          "type": "string",
+          "required": false,
+          "help": "Optional Vercel Team ID."
+        }
+      },
+      "output_schema": {
+        "before": "object",
+        "after": "object",
+        "changed": "boolean",
+        "api_status": "number",
+        "attempts": "number"
+      }
+    },
+    {
+      "id": "vercel.delete_deployment",
+      "title": "Delete a Vercel deployment with two live preconditions",
+      "provider": "vercel",
+      "risk": "high",
+      "mode": "write_requires_approval",
+      "side_effects": "external",
+      "requires": [
+        "VERCEL_ACCESS_TOKEN"
+      ],
+      "preview": true,
+      "receipt_required": true,
+      "input_schema": {
+        "deployment_id": {
+          "type": "string",
+          "required": true,
+          "help": "Vercel deployment ID, not a project name."
+        },
+        "confirm_deployment_url": {
+          "type": "string",
+          "required": true,
+          "help": "Exact deployment URL returned by vercel.get_deployment."
+        },
+        "expected_created_at": {
+          "type": "integer",
+          "required": true,
+          "help": "Exact createdAt value returned by vercel.get_deployment."
+        },
+        "team_id": {
+          "type": "string",
+          "required": false,
+          "help": "Optional Vercel Team ID."
+        }
+      },
+      "output_schema": {
+        "deleted": "boolean",
+        "deployment": "object",
+        "api_status": "number",
+        "attempts": "number"
+      }
+    }
+  ],
+  "license_required": false
+}
