@@ -379,5 +379,6 @@
       }
     }
   ],
-  "license_required": false
+  "license_required": false,
+  "publisher_pubkey": "b97807dbda00843848f1d0a311e4b0539ec176958ef7f355fefe74247df43020"
 }
