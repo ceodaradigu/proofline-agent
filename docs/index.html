@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Proofline &mdash; Evidence before action</title>
+  <meta name="description" content="A verification-first Google ADK agent that turns task claims into tamper-evident proof packets.">
+  <link rel="canonical" href="https://ceodaradigu.github.io/proofline-agent/">
+  <meta property="og:title" content="Proofline &mdash; Evidence before action">
+  <meta property="og:description" content="A verification-first Google ADK agent built with Gemini 3.6 Flash and deployed on Cloud Run.">
+  <meta property="og:image" content="https://raw.githubusercontent.com/ceodaradigu/proofline-agent/main/devpost-thumbnail.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <style>
+    :root { color-scheme: dark; --bg:#07101f; --panel:#0d1930; --ink:#f7f8fb; --muted:#aab4c8; --line:#26334c; --blue:#6ee7ff; --gold:#ffd780; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:radial-gradient(circle at 76% 0,#183769 0,transparent 34rem),var(--bg); font:16px/1.6 Inter,ui-sans-serif,system-ui,sans-serif; }
+    main { width:min(1080px,calc(100% - 32px)); margin:auto; padding:70px 0 42px; }
+    .pill { display:inline-flex; padding:7px 12px; border:1px solid #38527c; border-radius:999px; color:var(--blue); background:#0b1a32cc; font-size:13px; letter-spacing:.04em; }
+    h1 { max-width:820px; margin:22px 0 16px; font-size:clamp(42px,8vw,86px); line-height:.95; letter-spacing:-.055em; }
+    h1 span,.links a { color:var(--blue); }
+    .lead { max-width:770px; color:#d1d8e6; font-size:clamp(18px,2.5vw,24px); }
+    .actions,.links { display:flex; flex-wrap:wrap; gap:12px; }
+    .actions { margin:30px 0 52px; }
+    .button { padding:12px 17px; border-radius:10px; color:#07101f; background:var(--blue); font-weight:750; text-decoration:none; }
+    .button.secondary { color:var(--ink); background:transparent; border:1px solid #526483; }
+    .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+    .card { min-height:178px; padding:22px; border:1px solid var(--line); border-radius:16px; background:linear-gradient(145deg,#13233eaa,#0a1427ee); }
+    .card b { display:block; margin-bottom:10px; color:var(--gold); font-size:14px; }
+    .card p,.proof p,footer { color:var(--muted); }
+    section { margin:54px 0; }
+    h2 { margin:0 0 16px; font-size:clamp(27px,4vw,42px); letter-spacing:-.035em; }
+    .proof { display:grid; grid-template-columns:1.3fr .7fr; gap:20px; padding:28px; border:1px solid var(--line); border-radius:18px; background:var(--panel); }
+    code { color:var(--blue); overflow-wrap:anywhere; }
+    footer { display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; padding-top:28px; border-top:1px solid var(--line); font-size:13px; }
+    @media (max-width:800px) { .grid { grid-template-columns:1fr 1fr; } .proof { grid-template-columns:1fr; } }
+    @media (max-width:520px) { main { padding-top:38px; } .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="pill">Google ADK &middot; Gemini 3.6 Flash &middot; Cloud Run</span>
+    <h1>Evidence before <span>action.</span></h1>
+    <p class="lead">Proofline converts a work contract into explicit requirements, checks fresh authoritative evidence, detects contradictions, and creates a deterministic proof packet before an external action can proceed.</p>
+    <div class="actions">
+      <a class="button" href="https://proofline-343140361830.europe-west1.run.app/apps/proofline/app-info">Inspect the live ADK agent</a>
+      <a class="button secondary" href="https://youtu.be/khPpdq7GcTk">Watch the 2:53 demo</a>
+    </div>
+
+    <div class="grid" aria-label="Proofline decision states">
+      <article class="card"><b>01 &middot; NEEDS_EVIDENCE</b><p>A requirement lacks a fresh, authoritative source.</p></article>
+      <article class="card"><b>02 &middot; CONFLICT</b><p>Evidence disagrees, so the agent refuses to hide uncertainty.</p></article>
+      <article class="card"><b>03 &middot; APPROVAL_REQUIRED</b><p>The packet passes, but an external action still needs human approval.</p></article>
+      <article class="card"><b>04 &middot; READY</b><p>Every requirement is supported and the deterministic gate agrees.</p></article>
+    </div>
+
+    <section>
+      <h2>A live model call. A deterministic final boundary.</h2>
+      <div class="proof">
+        <div>
+          <p>Google ADK lets Gemini decompose and interpret the task. Proofline then applies the same auditable gate on every run, so fluent output cannot silently turn missing evidence into completion.</p>
+          <p>Verified Cloud Run execution: <strong>READY</strong><br>Packet hash: <code>973750f90ceffd925eba6716399f9064fcc789522ae8455efe764ef6c841eb5d</code></p>
+        </div>
+        <div>
+          <p><strong>Public verification</strong></p>
+          <div class="links">
+            <a href="https://proofline-343140361830.europe-west1.run.app/list-apps">App discovery</a>
+            <a href="https://proofline-343140361830.europe-west1.run.app/docs">OpenAPI</a>
+            <a href="https://github.com/ceodaradigu/proofline-agent">Source and tests</a>
+            <a href="https://devpost.com/software/proofline-65a8t4">Devpost submission</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span class="pill">AI-assisted project and presentation</span>
+      <span>Synthetic demo fixtures &middot; No customer data &middot; External actions remain human-gated</span>
+    </footer>
+  </main>
+</body>
+</html>
