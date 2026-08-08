@@ -60,6 +60,9 @@ three deterministic benchmark repetitions, and writes the evidence under
 artifacts exist and the measurements support it. The script does not create
 cloud resources or change billing.
 
+The verified Google Axion run and its exact measurements are documented in
+[`docs/arm-axion-evidence.md`](docs/arm-axion-evidence.md).
+
 For a disposable cloud VM, use the guarded one-shot wrapper:
 
 ```bash

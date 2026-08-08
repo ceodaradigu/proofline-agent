@@ -1,0 +1,24 @@
+/opt/proofline-venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+/opt/proofline-venv/lib/python3.13/site-packages/google/adk/cli/fast_api.py:567: UserWarning: [EXPERIMENTAL] InMemoryCredentialService: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
+  credential_service = InMemoryCredentialService()
+/opt/proofline-venv/lib/python3.13/site-packages/google/adk/auth/credential_service/in_memory_credential_service.py:33: UserWarning: [EXPERIMENTAL] BaseCredentialService: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
+  super().__init__()
+test_rejects_non_positive_work (test_arm_core_benchmark.ArmCoreBenchmarkTests.test_rejects_non_positive_work) ... ok
+test_small_run_is_reproducible_and_machine_readable (test_arm_core_benchmark.ArmCoreBenchmarkTests.test_small_run_is_reproducible_and_machine_readable) ... ok
+test_cloud_run_container_uses_runtime_port_and_public_server (test_container_contract.ContainerContractTests.test_cloud_run_container_uses_runtime_port_and_public_server) ... ok
+test_container_never_copies_local_secrets (test_container_contract.ContainerContractTests.test_container_never_copies_local_secrets) ... ok
+test_approved_complete_packet_is_ready_and_stable (test_core.EvaluateTests.test_approved_complete_packet_is_ready_and_stable) ... ok
+test_conflicting_authorities_are_escalated (test_core.EvaluateTests.test_conflicting_authorities_are_escalated) ... ok
+test_external_action_requires_human_approval (test_core.EvaluateTests.test_external_action_requires_human_approval) ... ok
+test_missing_evidence_cannot_be_ready (test_core.EvaluateTests.test_missing_evidence_cannot_be_ready) ... ok
+test_non_authoritative_evidence_cannot_satisfy_requirement (test_core.EvaluateTests.test_non_authoritative_evidence_cannot_satisfy_requirement) ... ok
+test_stale_evidence_is_rejected (test_core.EvaluateTests.test_stale_evidence_is_rejected) ... ok
+test_matrix_covers_every_decision_state_in_order (test_demo_matrix.DemoMatrixTests.test_matrix_covers_every_decision_state_in_order) ... ok
+test_adk_discovery_remains_available (test_public_server.PublicServerTests.test_adk_discovery_remains_available) ... ok
+test_root_is_a_clear_judge_facing_page (test_public_server.PublicServerTests.test_root_is_a_clear_judge_facing_page) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.124s
+
+OK
