@@ -6,6 +6,8 @@
   super().__init__()
 test_rejects_non_positive_work (test_arm_core_benchmark.ArmCoreBenchmarkTests.test_rejects_non_positive_work) ... ok
 test_small_run_is_reproducible_and_machine_readable (test_arm_core_benchmark.ArmCoreBenchmarkTests.test_small_run_is_reproducible_and_machine_readable) ... ok
+test_comparison_preserves_packet_and_reports_both_rates (test_arm_optimization_benchmark.ArmOptimizationBenchmarkTests.test_comparison_preserves_packet_and_reports_both_rates) ... ok
+test_rejects_non_positive_dimensions (test_arm_optimization_benchmark.ArmOptimizationBenchmarkTests.test_rejects_non_positive_dimensions) ... ok
 test_cloud_run_container_uses_runtime_port_and_public_server (test_container_contract.ContainerContractTests.test_cloud_run_container_uses_runtime_port_and_public_server) ... ok
 test_container_never_copies_local_secrets (test_container_contract.ContainerContractTests.test_container_never_copies_local_secrets) ... ok
 test_approved_complete_packet_is_ready_and_stable (test_core.EvaluateTests.test_approved_complete_packet_is_ready_and_stable) ... ok
@@ -19,6 +21,6 @@ test_adk_discovery_remains_available (test_public_server.PublicServerTests.test_
 test_root_is_a_clear_judge_facing_page (test_public_server.PublicServerTests.test_root_is_a_clear_judge_facing_page) ... ok
 
 ----------------------------------------------------------------------
-Ran 13 tests in 0.124s
+Ran 15 tests in 0.317s
 
 OK

@@ -3,7 +3,7 @@
   "benchmark": "proofline-deterministic-evaluate",
   "decision": "READY",
   "iterations_per_repeat": 10000,
-  "median_packets_per_second": 16608.92501911762,
+  "median_packets_per_second": 23665.170999461294,
   "operating_system": "Linux",
   "packet_hash": "9162f41d09cac59ac5c5b52cbc732f15b3ab822b6030f741c804870f72ea6576",
   "python_implementation": "CPython",
@@ -11,18 +11,18 @@
   "repeats": 3,
   "samples": [
     {
-      "elapsed_ns": 627208521,
-      "packets_per_second": 15943.66094398134,
+      "elapsed_ns": 422561916,
+      "packets_per_second": 23665.170999461294,
       "repeat": 1
     },
     {
-      "elapsed_ns": 572829568,
-      "packets_per_second": 17457.199416074836,
+      "elapsed_ns": 420662307,
+      "packets_per_second": 23772.037174702225,
       "repeat": 2
     },
     {
-      "elapsed_ns": 602085926,
-      "packets_per_second": 16608.92501911762,
+      "elapsed_ns": 437768817,
+      "packets_per_second": 22843.10716448312,
       "repeat": 3
     }
   ],
