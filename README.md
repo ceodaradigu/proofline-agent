@@ -63,6 +63,13 @@ cloud resources or change billing.
 The verified Google Axion run and its exact measurements are documented in
 [`docs/arm-axion-evidence.md`](docs/arm-axion-evidence.md).
 
+The Arm challenge branch also replaces the evaluator's repeated
+requirements-by-evidence scan with a single evidence index. The reproducible
+comparison in `benchmarks/arm_optimization_benchmark.py` runs the preserved
+baseline and optimized implementation in alternating order, rejects any proof
+packet difference, and records both rates plus the measured speedup. Arm64
+performance is not claimed until that comparison is rerun on Axion.
+
 For a disposable cloud VM, use the guarded one-shot wrapper:
 
 ```bash

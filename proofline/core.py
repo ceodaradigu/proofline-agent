@@ -105,6 +105,11 @@ def evaluate(
     if len(ids) != len(set(ids)):
         raise ValueError("requirement ids must be unique")
 
+    evidence_by_requirement: dict[str, list[Evidence]] = {}
+    for item in evidence_items:
+        if item.authoritative:
+            evidence_by_requirement.setdefault(item.requirement_id, []).append(item)
+
     unmet: list[str] = []
     conflicts: list[str] = []
 
@@ -113,9 +118,7 @@ def evaluate(
             raise ValueError("max_age_hours must be positive")
 
         fresh = []
-        for item in evidence_items:
-            if item.requirement_id != requirement.id or not item.authoritative:
-                continue
+        for item in evidence_by_requirement.get(requirement.id, ()):
             age_seconds = (checked_at - _utc(item.observed_at)).total_seconds()
             if 0 <= age_seconds <= requirement.max_age_hours * 3600:
                 fresh.append(item)
@@ -153,4 +156,3 @@ def evaluate(
         human_approved=human_approved,
         packet_hash=digest,
     )
-
