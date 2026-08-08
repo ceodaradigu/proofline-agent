@@ -60,6 +60,17 @@ three deterministic benchmark repetitions, and writes the evidence under
 artifacts exist and the measurements support it. The script does not create
 cloud resources or change billing.
 
+For a disposable cloud VM, use the guarded one-shot wrapper:
+
+```bash
+PROOFLINE_AUTO_POWEROFF=1 ./scripts/run_arm_cloud_once.sh
+```
+
+It enforces a 20-minute default timeout, archives and hashes the evidence, and
+powers off the VM on both success and failure. Automatic power-off is disabled
+unless `PROOFLINE_AUTO_POWEROFF=1` is set explicitly, preventing accidental
+shutdown during local development.
+
 The ADK agent folder follows Google's discovery convention and contains its own
 deployment requirements file. Deployment instructions are in
 [`docs/deployment.md`](docs/deployment.md), and the system diagram is in
