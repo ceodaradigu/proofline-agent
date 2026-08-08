@@ -45,6 +45,21 @@ python demo_matrix.py
 synthetic public-safe fixtures and a fixed UTC evaluation time, so judges can
 reproduce the same four packet hashes without credentials or network access.
 
+## Arm64 evidence workflow
+
+The candidate Arm Cloud AI work is kept separate from the existing Cloud Run
+submission. On an actual `aarch64` or `arm64` host, run:
+
+```bash
+./scripts/run_arm_evidence.sh
+```
+
+The runner refuses non-Arm hosts, executes the test suite, performs at least
+three deterministic benchmark repetitions, and writes the evidence under
+`artifacts/arm64/`. No Arm performance improvement is claimed until those
+artifacts exist and the measurements support it. The script does not create
+cloud resources or change billing.
+
 The ADK agent folder follows Google's discovery convention and contains its own
 deployment requirements file. Deployment instructions are in
 [`docs/deployment.md`](docs/deployment.md), and the system diagram is in
