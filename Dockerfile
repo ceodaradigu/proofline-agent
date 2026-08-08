@@ -11,7 +11,8 @@ COPY proofline/requirements.txt /tmp/requirements.txt
 RUN python -m pip install --no-cache-dir -r /tmp/requirements.txt
 
 COPY proofline /app/agents/proofline
+COPY server.py /app/server.py
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "exec adk api_server --host 0.0.0.0 --port \"$PORT\" --session_service_uri memory:// --artifact_service_uri memory:// --memory_service_uri memory:// /app/agents"]
+CMD ["sh", "-c", "exec uvicorn server:app --host 0.0.0.0 --port \"$PORT\""]
