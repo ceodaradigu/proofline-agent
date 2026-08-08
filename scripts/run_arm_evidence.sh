@@ -17,6 +17,18 @@ iterations="${PROOFLINE_BENCHMARK_ITERATIONS:-10000}"
 repeats="${PROOFLINE_BENCHMARK_REPEATS:-3}"
 artifact_dir="${PROOFLINE_ARTIFACT_DIR:-artifacts/arm64}"
 
+python_bin="${PROOFLINE_PYTHON:-}"
+if [[ -z "$python_bin" ]]; then
+  if command -v python3 >/dev/null 2>&1; then
+    python_bin="python3"
+  elif command -v python >/dev/null 2>&1; then
+    python_bin="python"
+  else
+    echo "Python 3 is required to run the Arm evidence workflow" >&2
+    exit 2
+  fi
+fi
+
 if ! [[ "$iterations" =~ ^[1-9][0-9]*$ ]]; then
   echo "PROOFLINE_BENCHMARK_ITERATIONS must be a positive integer" >&2
   exit 2
@@ -28,13 +40,13 @@ fi
 
 mkdir -p "$artifact_dir"
 
-python -m unittest discover -s tests -v 2>&1 | tee "$artifact_dir/tests.txt"
-python -m benchmarks.arm_core_benchmark \
+"$python_bin" -m unittest discover -s tests -v 2>&1 | tee "$artifact_dir/tests.txt"
+"$python_bin" -m benchmarks.arm_core_benchmark \
   --iterations "$iterations" \
   --repeats "$repeats" \
   --output "$artifact_dir/benchmark.json"
 
-python - "$artifact_dir/benchmark.json" <<'PY'
+"$python_bin" - "$artifact_dir/benchmark.json" <<'PY'
 from __future__ import annotations
 
 import json
