@@ -313,18 +313,12 @@ def _request(
         except HTTPError as exc:
             status = int(exc.code)
             if status in allowed_statuses:
-                try:
-                    exc.close()
-                except Exception:
-                    pass
+                _close_http_error(exc, f"{method} {path} accepted HTTP {status}")
                 return ApiResult(None, status, attempt + 1)
             retryable = status in RETRYABLE_STATUSES and method in SAFE_RETRY_METHODS
             if retryable and attempt < MAX_ATTEMPTS - 1:
                 delay = _retry_delay(exc, attempt)
-                try:
-                    exc.close()
-                except Exception:
-                    pass
+                _close_http_error(exc, f"{method} {path} retry after HTTP {status}")
                 time.sleep(delay)
                 continue
             detail = _error_detail(exc)
@@ -584,11 +578,12 @@ def _retry_delay(exc: HTTPError, attempt: int) -> float:
         try:
             return min(max(float(retry_after), 0.0), 60.0)
         except (TypeError, ValueError):
-            pass
+            return float(2**attempt)
     return float(2**attempt)
 
 
 def _error_detail(exc: HTTPError) -> str:
+    detail = _safe_text(exc.reason or "unknown error")
     try:
         raw = exc.read().decode("utf-8", errors="replace")
         parsed = json.loads(raw) if raw else {}
@@ -597,15 +592,33 @@ def _error_detail(exc: HTTPError) -> str:
             if isinstance(error, dict):
                 code = error.get("code")
                 message = error.get("message")
-                return _safe_text(f"{code}: {message}")
-        return _safe_text(raw or exc.reason or "unknown error")
-    except Exception:
-        return _safe_text(exc.reason or "unknown error")
-    finally:
-        try:
-            exc.close()
-        except Exception:
-            pass
+                detail = _safe_text(f"{code}: {message}")
+            else:
+                detail = _safe_text(raw or detail)
+        else:
+            detail = _safe_text(raw or detail)
+    except Exception as parse_error:
+        detail = _safe_text(
+            f"{detail}; response_parse_error={type(parse_error).__name__}: {parse_error}"
+        )
+    try:
+        exc.close()
+    except Exception as close_error:
+        detail = _safe_text(
+            f"{detail}; response_close_error={type(close_error).__name__}: {close_error}"
+        )
+    return detail
+
+
+def _close_http_error(exc: HTTPError, operation: str) -> None:
+    """Close an HTTP error response or fail loudly so RailCall records it."""
+    try:
+        exc.close()
+    except Exception as close_error:
+        raise VercelApiError(
+            f"Vercel response cleanup failed during {operation}: "
+            f"{type(close_error).__name__}: {_safe_text(close_error)}"
+        ) from close_error
 
 
 def _safe_text(value: Any) -> str:
