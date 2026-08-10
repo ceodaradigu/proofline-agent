@@ -100,6 +100,15 @@ python -m json.tool module.json > /dev/null
 python -m unittest discover -s tests -v
 ```
 
+The current public evidence is linked directly from the marketplace manifest:
+
+- [Focused regression tests](https://github.com/ceodaradigu/proofline-agent/tree/main/integrations/railcall-vercel-deployment-ops/tests)
+- [Continuous proof video](https://github.com/ceodaradigu/proofline-agent/raw/main/integrations/railcall-vercel-deployment-ops/demo/vercel-deployment-ops-proof.mp4)
+
+Version 0.1.2 adds regression coverage for response-cleanup failures, cleanup
+errors embedded in API error details, and malformed `Retry-After` values. The
+suite currently passes 10/10 tests without production writes.
+
 Before marketplace publication, the release checklist also requires a real,
 least-privilege Vercel token and a disposable preview deployment for the live
 read/cancel/delete smoke test. No production deployment should be used.

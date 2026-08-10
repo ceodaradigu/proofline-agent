@@ -20,6 +20,37 @@ os.environ.setdefault("VERCEL_ACCESS_TOKEN", "test-token-not-a-secret")
 
 
 class VercelDeploymentOpsTests(unittest.TestCase):
+    def test_response_cleanup_failure_is_not_swallowed(self) -> None:
+        class BrokenClose:
+            def close(self) -> None:
+                raise OSError("socket cleanup failed")
+
+        with self.assertRaisesRegex(
+            handler.VercelApiError,
+            "response cleanup failed.*socket cleanup failed",
+        ):
+            handler._close_http_error(BrokenClose(), "GET /example after HTTP 503")
+
+    def test_error_detail_surfaces_response_cleanup_failure(self) -> None:
+        class BrokenErrorResponse:
+            reason = "Bad Request"
+
+            def read(self) -> bytes:
+                return b'{"error":{"code":"bad_request","message":"invalid input"}}'
+
+            def close(self) -> None:
+                raise OSError("close receipt failed")
+
+        detail = handler._error_detail(BrokenErrorResponse())
+        self.assertIn("bad_request: invalid input", detail)
+        self.assertIn("response_close_error=OSError: close receipt failed", detail)
+
+    def test_invalid_retry_after_uses_explicit_backoff(self) -> None:
+        class InvalidRetryAfter:
+            headers = {"Retry-After": "not-a-number"}
+
+        self.assertEqual(handler._retry_delay(InvalidRetryAfter(), 2), 4.0)
+
     def test_project_projection_omits_environment_data(self) -> None:
         response = handler.ApiResult(
             {
