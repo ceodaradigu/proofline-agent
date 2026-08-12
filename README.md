@@ -8,7 +8,7 @@ an explicit human-approval gate.
 
 ## Arm Create 2026: Cloud AI optimization
 
-This branch is the Proofline on Arm submission branch. During the challenge,
+This repository includes the Proofline on Arm challenge work. During the challenge,
 the deterministic evidence gate was changed from a repeated requirements-by-
 evidence scan to a single authoritative-evidence index, reducing its matching
 work from O(R x E) to O(R + E).

@@ -15,12 +15,13 @@ claimed before an organizer confirms and pays it.
 **Built with:** Arm64, Google Axion, Python, Google ADK, Gemini, FastAPI, Google Cloud
 
 **Source code:**
-https://github.com/ceodaradigu/proofline-agent/tree/codex/arm-proofline-benchmark
+https://github.com/ceodaradigu/proofline-agent
 
 **Testing and benchmark evidence:**
-https://github.com/ceodaradigu/proofline-agent/blob/codex/arm-proofline-benchmark/docs/arm-axion-evidence.md
+https://github.com/ceodaradigu/proofline-agent/blob/main/docs/arm-axion-evidence.md
 
-**Public product demo:** https://proofline-343140361830.europe-west1.run.app
+**Public product demo:**
+https://proofline-343140361830.europe-west1.run.app/apps/proofline/app-info
 
 **Supporting video:** https://youtu.be/khPpdq7GcTk
 
@@ -75,11 +76,10 @@ cross-machine comparison is used for the 57.36% claim.
 
 1. Start an Arm64 Linux environment. The submitted evidence used Google Axion
    `c4a-standard-1` in `us-central1-b`.
-2. Clone the challenge branch:
+2. Clone the public repository:
 
    ```bash
-   git clone --branch codex/arm-proofline-benchmark \
-     https://github.com/ceodaradigu/proofline-agent.git
+   git clone https://github.com/ceodaradigu/proofline-agent.git
    cd proofline-agent
    ```
 
