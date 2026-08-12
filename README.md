@@ -6,6 +6,8 @@ requirements, evaluates fresh authoritative evidence, detects contradictions,
 and produces a tamper-evident proof packet. External submissions remain behind
 an explicit human-approval gate.
 
+**See the contradiction before the claim:** watch the [46-second continuous evidence run](https://daradigu.com/proofline?utm_source=github&utm_medium=readme&utm_campaign=proofline_continuous_demo). It follows one synthetic fixture from conflicting sources to recheck, human approval, and a sealed packet. Teams can also request a fixed-scope evidence audit or implementation sprint from that page.
+
 ## Arm Create 2026: Cloud AI optimization
 
 This repository includes the Proofline on Arm challenge work. During the challenge,
@@ -158,9 +160,9 @@ No customer data is included in the repository. Demo fixtures are synthetic.
   deterministic evidence gate. Firestore and Pub/Sub remain documented
   extension points and are not required by the current in-memory demo.
 - Devpost project: officially submitted to the All Things Agentic Hackathon at
-  <https://devpost.com/software/proofline-65a8t4>. The public 2:53 demo is at
-  <https://youtu.be/khPpdq7GcTk>. No prize or revenue is claimed unless an
-  organizer confirms an award and payment.
+  <https://devpost.com/software/proofline-65a8t4>. The current public walkthrough
+  is the [46-second continuous evidence run](https://daradigu.com/proofline?utm_source=github&utm_medium=readme&utm_campaign=proofline_continuous_demo).
+  No prize or revenue is claimed unless an organizer confirms an award and payment.
 - Demo preparation: the 3:45-4:00 recording plan is in
   [`docs/demo-video.md`](docs/demo-video.md). The live Cloud Run evidence above
   is the authoritative source for its hosted segment.
