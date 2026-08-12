@@ -6,6 +6,23 @@ requirements, evaluates fresh authoritative evidence, detects contradictions,
 and produces a tamper-evident proof packet. External submissions remain behind
 an explicit human-approval gate.
 
+## Arm Create 2026: Cloud AI optimization
+
+This repository includes the Proofline on Arm challenge work. During the challenge,
+the deterministic evidence gate was changed from a repeated requirements-by-
+evidence scan to a single authoritative-evidence index, reducing its matching
+work from O(R x E) to O(R + E).
+
+On one Google Axion `c4a-standard-1` host, the preserved baseline processed a
+median 62.539 proof packets/second and the optimized evaluator processed 98.414
+proof packets/second: a measured 1.5736x speedup, or 57.36% higher throughput.
+The decision and deterministic packet hash were identical, and all 15 tests
+passed on the same Arm64 host.
+
+Judges can start with the complete
+[`Arm Create submission brief`](docs/arm-devpost-submission.md) and the raw,
+reproducible [`Google Axion evidence`](docs/arm-axion-evidence.md).
+
 This project was started on 2026-08-05 for Google's All Things Agentic
 Hackathon. It is a new project in the Taskmaster category.
 
@@ -44,6 +61,42 @@ python demo_matrix.py
 `NEEDS_EVIDENCE`, `CONFLICT`, `APPROVAL_REQUIRED`, and `READY`. It uses only
 synthetic public-safe fixtures and a fixed UTC evaluation time, so judges can
 reproduce the same four packet hashes without credentials or network access.
+
+## Arm64 evidence workflow
+
+The candidate Arm Cloud AI work is kept separate from the existing Cloud Run
+submission. On an actual `aarch64` or `arm64` host, run:
+
+```bash
+./scripts/run_arm_evidence.sh
+```
+
+The runner refuses non-Arm hosts, executes the test suite, performs at least
+three deterministic benchmark repetitions, and writes the evidence under
+`artifacts/arm64/`. No Arm performance improvement is claimed until those
+artifacts exist and the measurements support it. The script does not create
+cloud resources or change billing.
+
+The verified Google Axion run and its exact measurements are documented in
+[`docs/arm-axion-evidence.md`](docs/arm-axion-evidence.md).
+
+The Arm challenge branch also replaces the evaluator's repeated
+requirements-by-evidence scan with a single evidence index. The reproducible
+comparison in `benchmarks/arm_optimization_benchmark.py` runs the preserved
+baseline and optimized implementation in alternating order, rejects any proof
+packet difference, and records both rates plus the measured speedup. Arm64
+performance is not claimed until that comparison is rerun on Axion.
+
+For a disposable cloud VM, use the guarded one-shot wrapper:
+
+```bash
+PROOFLINE_AUTO_POWEROFF=1 ./scripts/run_arm_cloud_once.sh
+```
+
+It enforces a 20-minute default timeout, archives and hashes the evidence, and
+powers off the VM on both success and failure. Automatic power-off is disabled
+unless `PROOFLINE_AUTO_POWEROFF=1` is set explicitly, preventing accidental
+shutdown during local development.
 
 The ADK agent folder follows Google's discovery convention and contains its own
 deployment requirements file. Deployment instructions are in

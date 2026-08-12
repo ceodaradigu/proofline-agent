@@ -1,0 +1,53 @@
+{
+  "architecture": "aarch64",
+  "baseline_median_packets_per_second": 62.539235552905005,
+  "benchmark": "proofline-indexed-evidence-lookup",
+  "decision": "READY",
+  "evidence_count": 1024,
+  "iterations_per_repeat": 100,
+  "operating_system": "Linux",
+  "optimized_median_packets_per_second": 98.41426482724987,
+  "packet_hash": "864b6d663820a08b4cd51e948b557230019c49a351a93c35dc1028bb4437984f",
+  "python_version": "3.13.5",
+  "repeats": 5,
+  "requirement_count": 256,
+  "samples": [
+    {
+      "baseline_elapsed_ns": 1598996200,
+      "baseline_packets_per_second": 62.539235552905005,
+      "optimized_elapsed_ns": 1018736356,
+      "optimized_packets_per_second": 98.16082385892587,
+      "repeat": 1
+    },
+    {
+      "baseline_elapsed_ns": 1947529020,
+      "baseline_packets_per_second": 51.34711676850905,
+      "optimized_elapsed_ns": 1175820874,
+      "optimized_packets_per_second": 85.04696779179649,
+      "repeat": 2
+    },
+    {
+      "baseline_elapsed_ns": 1599857139,
+      "baseline_packets_per_second": 62.50558100613007,
+      "optimized_elapsed_ns": 1016112859,
+      "optimized_packets_per_second": 98.41426482724987,
+      "repeat": 3
+    },
+    {
+      "baseline_elapsed_ns": 1518450728,
+      "baseline_packets_per_second": 65.85659854219517,
+      "optimized_elapsed_ns": 1015300872,
+      "optimized_packets_per_second": 98.49297164791561,
+      "repeat": 4
+    },
+    {
+      "baseline_elapsed_ns": 1519931961,
+      "baseline_packets_per_second": 65.79241871735336,
+      "optimized_elapsed_ns": 1008601061,
+      "optimized_packets_per_second": 99.14722863849931,
+      "repeat": 5
+    }
+  ],
+  "schema_version": 1,
+  "speedup": 1.573640354845662
+}
