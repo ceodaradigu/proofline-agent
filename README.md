@@ -63,6 +63,18 @@ Proofline is live on Google Cloud Run in `europe-west1`:
 
 <https://proofline-343140361830.europe-west1.run.app>
 
+A continuous 46-second product walkthrough is also embedded on the public
+Proofline page:
+
+<https://daradigu.com/proofline>
+
+It shows evidence collection, a promise mismatch, a fresh recheck, the human
+approval boundary, and the sealed packet in one uninterrupted sequence. The
+walkthrough uses synthetic fixtures, contains no customer data, and is
+explicitly labelled as AI-assisted. Teams that need the same verification
+boundary can use the page to request a fixed-scope diagnosis or implementation
+sprint.
+
 The public ADK API is deployed as revision `proofline-00001-rqw` with zero
 minimum instances, one maximum instance, 512 MiB memory, one CPU, concurrency
 20, and startup CPU boost disabled. On 2026-08-05 an external verification
