@@ -8,6 +8,13 @@ an explicit human-approval gate.
 
 **See the contradiction before the claim:** watch the [46-second continuous evidence run](https://daradigu.com/proofline?utm_source=github&utm_medium=readme&utm_campaign=proofline_continuous_demo). It follows one synthetic fixture from conflicting sources to recheck, human approval, and a sealed packet. Teams can also request a fixed-scope evidence audit or implementation sprint from that page.
 
+## Need this evidence gate on your workflow?
+
+- [Start with a **$59 fixed-scope evidence diagnosis**](https://buy.stripe.com/bJe6oJ8PQ3lKgULaCrefC02?utm_source=github&utm_medium=readme&utm_campaign=proofline_services&client_reference_id=proofline_readme_59) to identify missing, stale, or contradictory proof.
+- [Book the **$249 48-hour verification sprint**](https://buy.stripe.com/00wcN75DE5tSfQH7qfefC00?utm_source=github&utm_medium=readme&utm_campaign=proofline_services&client_reference_id=proofline_readme_249) for a working evidence gate and proof-packet workflow.
+
+Both are one-time services with no subscription or automatic renewal.
+
 ## Arm Create 2026: Cloud AI optimization
 
 This repository includes the Proofline on Arm challenge work. During the challenge,
