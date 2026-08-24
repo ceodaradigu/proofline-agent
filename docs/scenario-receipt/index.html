@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A synthetic ScenarioReceipt boundary demo for evidence-grounded crash-to-validation workflows."
+    />
+    <title>ScenarioReceipt — Synthetic boundary demo</title>
+    <style>
+      :root {
+        --paper: #ecece6;
+        --ink: #101311;
+        --grid: #b9bdb7;
+        --signal: #ff5b24;
+        --lime: #d4ff36;
+        --deep: #153d33;
+        color-scheme: light;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+      body { background: var(--paper); color: var(--ink); margin: 0; }
+      button, select { font: inherit; }
+      a { color: inherit; }
+
+      .mono,
+      .eyebrow,
+      .panel-head,
+      label,
+      .decision-label,
+      .hash-label,
+      footer {
+        font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+        font-size: .7rem;
+        font-weight: 750;
+        letter-spacing: .055em;
+        text-transform: uppercase;
+      }
+
+      header {
+        align-items: center;
+        border-bottom: 1px solid var(--ink);
+        display: flex;
+        justify-content: space-between;
+        padding: 1.2rem 4vw;
+      }
+      .brand { font-weight: 900; letter-spacing: -.055em; text-decoration: none; }
+      .brand span { color: var(--signal); }
+
+      .hero {
+        border-bottom: 1px solid var(--ink);
+        overflow: hidden;
+        padding: 2rem 4vw 4.5rem;
+        position: relative;
+      }
+      .hero::before {
+        background-image: linear-gradient(to right, #b9bdb788 1px, transparent 1px), linear-gradient(to bottom, #b9bdb788 1px, transparent 1px);
+        background-size: 6vw 6vw;
+        content: "";
+        inset: 0;
+        opacity: .55;
+        pointer-events: none;
+        position: absolute;
+      }
+      .hero > * { position: relative; }
+      .hero-meta { display: flex; justify-content: space-between; }
+      h1 {
+        font-size: clamp(4rem, 10vw, 10rem);
+        letter-spacing: -.085em;
+        line-height: .84;
+        margin: 6rem 0 4rem;
+        max-width: 1450px;
+      }
+      h1 em { color: var(--deep); font-family: Georgia, serif; font-weight: 400; }
+      .hero-foot {
+        align-items: end;
+        display: grid;
+        gap: clamp(2rem, 7vw, 7rem);
+        grid-template-columns: 1.2fr .8fr;
+        margin-left: 20vw;
+      }
+      .hero-foot > p { font-size: clamp(1.1rem, 1.8vw, 1.55rem); line-height: 1.45; margin: 0; }
+      .truth {
+        background: var(--deep);
+        color: #d6ded9;
+        display: grid;
+        font-size: .9rem;
+        gap: .8rem;
+        line-height: 1.5;
+        padding: 1.35rem;
+      }
+      .truth strong { color: var(--lime); }
+
+      .pipeline, .demo, .scope { margin: 0 auto; max-width: 1440px; padding: 6rem 4vw; }
+      .section-title {
+        align-items: end;
+        border-bottom: 1px solid var(--ink);
+        display: grid;
+        gap: 5vw;
+        grid-template-columns: .3fr 1.7fr;
+        padding-bottom: 2.3rem;
+      }
+      .section-title p { margin: 0; }
+      .section-title h2, .scope h2 {
+        font-size: clamp(2.7rem, 5.8vw, 6.2rem);
+        letter-spacing: -.075em;
+        line-height: .94;
+        margin: 0;
+      }
+      .steps { display: grid; grid-template-columns: repeat(5, 1fr); list-style: none; margin: 0; padding: 0; }
+      .steps li { border-left: 1px solid var(--grid); min-height: 18rem; padding: 1.8rem 1.15rem; }
+      .steps li:last-child { border-right: 1px solid var(--grid); }
+      .steps b { background: var(--ink); color: var(--lime); display: inline-block; font: 700 .72rem ui-monospace, monospace; padding: .45rem; }
+      .steps h3 { font-size: 1.3rem; letter-spacing: -.04em; margin: 4rem 0 1rem; }
+      .steps p { color: #525a55; font-size: .88rem; line-height: 1.55; margin: 0; }
+
+      .demo { border-bottom: 1px solid var(--ink); border-top: 1px solid var(--ink); max-width: none; }
+      .demo-grid { display: grid; grid-template-columns: minmax(280px, .72fr) 1.28fr; margin-top: 3rem; }
+      .controls, .receipt { min-height: 39rem; }
+      .controls {
+        background: #f6f6f0;
+        border: 1px solid var(--ink);
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem;
+      }
+      .panel-head { display: flex; justify-content: space-between; margin-bottom: 4rem; }
+      label { margin-bottom: .65rem; }
+      select { background: white; border: 1px solid var(--ink); border-radius: 0; color: var(--ink); padding: 1rem; width: 100%; }
+      #preset-description { color: #5b625d; font-size: .87rem; line-height: 1.5; }
+      dl { border-top: 1px solid var(--grid); margin: 2rem 0; }
+      dl div { align-items: baseline; border-bottom: 1px solid var(--grid); display: flex; justify-content: space-between; padding: .85rem 0; }
+      dt { color: #636a65; font: .66rem ui-monospace, monospace; text-transform: uppercase; }
+      dd { font-size: .84rem; margin: 0; text-align: right; }
+      button {
+        align-items: center;
+        background: var(--signal);
+        border: 1px solid var(--ink);
+        color: var(--ink);
+        cursor: pointer;
+        display: flex;
+        font: 800 .72rem ui-monospace, monospace;
+        justify-content: space-between;
+        margin-top: auto;
+        padding: 1rem 1.15rem;
+        text-transform: uppercase;
+      }
+      button:hover, button:focus-visible { background: var(--lime); }
+      button:disabled { cursor: wait; opacity: .65; }
+
+      .receipt { background: var(--ink); border: 1px solid var(--ink); color: white; }
+      .empty { align-items: center; display: flex; flex-direction: column; height: 100%; justify-content: center; padding: 3rem; text-align: center; }
+      .seal { align-items: center; border: 1px solid #5c655f; border-radius: 50%; color: var(--lime); display: flex; font-size: 4rem; font-weight: 900; height: 9rem; justify-content: center; letter-spacing: -.08em; margin: 3rem 0; width: 9rem; }
+      .empty h3 { font-size: 2rem; letter-spacing: -.04em; margin: 0; }
+      .empty p { color: #aab3ad; line-height: 1.6; max-width: 480px; }
+      .receipt-top { align-items: center; border-bottom: 1px solid #444b46; display: flex; justify-content: space-between; padding: 1.5rem; }
+      .decision { background: var(--lime); color: var(--ink); font-size: clamp(1rem, 2vw, 1.6rem); padding: .45rem .65rem; }
+      .decision.ready { background: #67efa3; }
+      .decision.rejected { background: var(--signal); }
+      .receipt-body { padding: 2rem; }
+      .receipt-body h3 { font-size: clamp(2.5rem, 5vw, 5rem); letter-spacing: -.07em; line-height: .93; margin: 1.2rem 0 3rem; }
+      .metrics { border-bottom: 1px solid #454b47; border-top: 1px solid #454b47; display: grid; grid-template-columns: repeat(3, 1fr); }
+      .metrics div { padding: 1.35rem 0; }
+      .metrics div + div { border-left: 1px solid #454b47; padding-left: 1.35rem; }
+      .metrics span { color: #9ca7a0; display: block; font: .63rem ui-monospace, monospace; margin-bottom: .65rem; text-transform: uppercase; }
+      .parameter { align-items: center; display: flex; justify-content: space-between; padding: 1.5rem 0; }
+      .parameter code { background: #2a302c; color: var(--lime); padding: .55rem .7rem; }
+      .finding { border-left: 3px solid var(--signal); color: #e4e7e4; line-height: 1.5; padding-left: 1.4rem; }
+      .finding.clear { border-color: #67efa3; }
+      .hash { border-top: 1px solid #454b47; display: grid; gap: .7rem; margin-top: 2rem; padding-top: 1.4rem; }
+      .hash code { color: #9da9a1; font-size: .7rem; overflow-wrap: anywhere; }
+      .boundary { color: #525a55; font: .69rem/1.55 ui-monospace, monospace; margin: 1.5rem 0 0; max-width: 900px; text-transform: uppercase; }
+
+      .scope { display: grid; gap: 5rem; grid-template-columns: .72fr 1.28fr; }
+      .scope-list { border-top: 1px solid var(--ink); }
+      .scope-list article { border-bottom: 1px solid var(--grid); display: grid; gap: 1.5rem; grid-template-columns: .2fr .7fr 1.1fr; padding: 1.7rem 0; }
+      .scope-list h3 { font-size: 1.2rem; margin: 0; }
+      .scope-list p { color: #555d57; line-height: 1.55; margin: 0; }
+      footer { align-items: center; background: var(--deep); color: #dfe7e2; display: flex; flex-wrap: wrap; gap: 2rem; padding: 2rem 4vw; }
+      footer span { margin-right: auto; }
+
+      @media (max-width: 900px) {
+        .steps { grid-template-columns: repeat(2, 1fr); }
+        .steps li { border-bottom: 1px solid var(--grid); min-height: 15rem; }
+        .demo-grid, .scope { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 680px) {
+        header .mono { display: none; }
+        .hero-foot, .section-title { grid-template-columns: 1fr; margin-left: 0; }
+        .steps { grid-template-columns: 1fr; }
+        .controls, .receipt { min-height: 0; }
+        .metrics { grid-template-columns: 1fr; }
+        .metrics div + div { border-left: 0; border-top: 1px solid #454b47; padding-left: 0; }
+        .scope-list article { grid-template-columns: .25fr .75fr; }
+        .scope-list article p { grid-column: 1 / -1; }
+      }
+      @media (max-width: 480px) {
+        header, .hero, .pipeline, .demo, .scope, footer { padding-left: 1.1rem; padding-right: 1.1rem; }
+        h1 { font-size: clamp(3.7rem, 19vw, 6rem); }
+        .hero-meta span:last-child { display: none; }
+        .panel-head { align-items: flex-start; flex-direction: column; gap: .5rem; }
+        .receipt-body { padding: 1.3rem; }
+        .parameter { align-items: flex-start; flex-direction: column; gap: .8rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="https://github.com/ceodaradigu/proofline-agent">RELAUNCH <span>DEPT.</span></a>
+      <span class="mono">AI-BOOST Challenge 4 / experimental boundary</span>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-meta mono"><span>ScenarioReceipt / 0.1.0</span><span>Synthetic data only</span></div>
+        <h1 id="page-title">Crash evidence in.<br /><em>Inspectable scenario out.</em></h1>
+        <div class="hero-foot">
+          <p>A crash-to-validation boundary that keeps provenance, uncertainty, deterministic checks, catalogue coverage, and the final decision in one reviewable receipt.</p>
+          <div class="truth"><strong class="mono">Honest prototype boundary</strong><span>No real crash database, generative extractor, automotive accuracy, ASAM compatibility, or safety certification is claimed.</span></div>
+        </div>
+      </section>
+
+      <section class="pipeline" aria-labelledby="pipeline-title">
+        <div class="section-title"><p class="eyebrow">The decision contract</p><h2 id="pipeline-title">One boundary between model output and engineering use.</h2></div>
+        <ol class="steps">
+          <li><b>01</b><h3>Bind evidence</h3><p>Every populated attribute points back to a stable source identifier and field path.</p></li>
+          <li><b>02</b><h3>Preserve uncertainty</h3><p>Missing speed remains unknown. The boundary never invents a convenient range.</p></li>
+          <li><b>03</b><h3>Validate independently</h3><p>Deterministic range, schema, privacy, and consistency gates control promotion.</p></li>
+          <li><b>04</b><h3>Explain coverage</h3><p>Catalogue candidates expose each matched and unmatched constraint, not only a score.</p></li>
+          <li><b>05</b><h3>Seal the decision</h3><p>A canonical SHA-256 receipt makes later changes to evidence or output detectable.</p></li>
+        </ol>
+      </section>
+
+      <section class="demo" aria-labelledby="demo-title">
+        <div class="section-title"><p class="eyebrow">Live boundary test</p><h2 id="demo-title">Change one evidence state. Inspect the whole decision.</h2></div>
+        <div class="demo-grid">
+          <form class="controls" id="receipt-form">
+            <div class="panel-head"><span>Input / synthetic fixture</span><span>No network request</span></div>
+            <label for="preset">Evidence state</label>
+            <select id="preset">
+              <option value="missing">Speed evidence missing</option>
+              <option value="observed">Observed speed: 18 km/h</option>
+              <option value="invalid">Invalid speed: -5 km/h</option>
+            </select>
+            <p id="preset-description">A complete actor/manoeuvre record with no defensible speed value.</p>
+            <dl>
+              <div><dt>Primary actor</dt><dd>cyclist / straight</dd></div>
+              <div><dt>Counterpart</dt><dd>car / left turn</dd></div>
+              <div><dt>Environment</dt><dd>urban junction / daylight</dd></div>
+              <div><dt>Data class</dt><dd>explicitly synthetic</dd></div>
+            </dl>
+            <button id="build" type="submit"><span>Build evidence receipt</span><span aria-hidden="true">→</span></button>
+          </form>
+          <div class="receipt" id="receipt" aria-live="polite">
+            <div class="empty"><span class="eyebrow">Awaiting local run</span><div class="seal" aria-hidden="true">SR</div><h3>No decision exists yet.</h3><p>Select a synthetic evidence state and build the receipt. The browser performs the calculation locally and sends no data.</p></div>
+          </div>
+        </div>
+        <p class="boundary">This interaction demonstrates the deterministic acceptance boundary only. It does not extract from real reports, call a model, assign crash fault, or certify a scenario for safety use.</p>
+      </section>
+
+      <section class="scope" aria-labelledby="scope-title">
+        <div><p class="eyebrow">Five-month Advance path</p><h2 id="scope-title">The missing work stays visible.</h2></div>
+        <div class="scope-list">
+          <article><span class="eyebrow">Now</span><h3>Deterministic boundary</h3><p>Synthetic fixtures, evidence references, uncertainty states, validation, catalogue matching, and stable receipts.</p></article>
+          <article><span class="eyebrow">Next</span><h3>Licensed source adapters</h3><p>Two open European accident sources, a versioned scenario schema, data cards, and a labelled baseline.</p></article>
+          <article><span class="eyebrow">Advance</span><h3>Constrained extraction</h3><p>Disclosed LLM/VLM extraction, calibration, kinematic gates, expert review, and simulation-oriented export.</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer><span>ScenarioReceipt / synthetic, browser-local, zero-dependency demonstration</span><a href="https://github.com/ceodaradigu/proofline-agent">Proofline source</a></footer>
+
+    <script>
+      const presetCopy = {
+        missing: "A complete actor/manoeuvre record with no defensible speed value.",
+        observed: "The same synthetic record with an explicit, valid source field.",
+        invalid: "A deliberately impossible value that must fail closed."
+      };
+
+      function canonical(value) {
+        if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
+        if (value !== null && typeof value === "object") {
+          return `{${Object.entries(value).sort(([a], [b]) => a.localeCompare(b)).map(([key, child]) => `${JSON.stringify(key)}:${canonical(child)}`).join(",")}}`;
+        }
+        return JSON.stringify(value);
+      }
+
+      async function digest(value) {
+        const bytes = new TextEncoder().encode(canonical(value));
+        const hash = await crypto.subtle.digest("SHA-256", bytes);
+        return Array.from(new Uint8Array(hash), byte => byte.toString(16).padStart(2, "0")).join("");
+      }
+
+      async function createReceipt(preset) {
+        const speed = preset === "missing" ? null : preset === "observed" ? 18 : -5;
+        const errors = speed !== null && (speed < 0 || speed > 250) ? ["speed_kph must be numeric and between 0 and 250"] : [];
+        const reviewReasons = speed === null ? ["speed_kph is unknown; no speed range may be asserted"] : [];
+        const decision = errors.length ? "REJECTED" : reviewReasons.length ? "NEEDS_REVIEW" : "READY";
+        const payload = {
+          schema_version: "scenario-receipt/0.1.0",
+          source: { source_id: "synthetic-eu-cyclist-turn-001", synthetic: true },
+          functional_scenario: {
+            taxonomy_id: "vehicle_turning_across_cyclist_path",
+            uncertainty: "derived",
+            evidence_refs: ["record.primary_road_user", "record.counterpart", "record.primary_maneuver", "record.counterpart_maneuver"]
+          },
+          logical_parameters: { speed: { value: speed, unit: "km/h", uncertainty: speed === null ? "unknown" : "observed" } },
+          catalogue_match: { catalogue_id: "EU-VRU-TURN-001", score: 1, matched_constraints: 3, total_constraints: 3 },
+          validation: { decision, errors, review_reasons: reviewReasons },
+          model_disclosure: { generative_model_used: false, note: "Deterministic boundary prototype; extraction model is future work." }
+        };
+        return { decision, speed, errors, reviewReasons, receiptSha256: await digest(payload) };
+      }
+
+      function renderReceipt(receipt) {
+        const root = document.getElementById("receipt");
+        root.replaceChildren();
+
+        const top = document.createElement("div");
+        top.className = "receipt-top";
+        const label = document.createElement("span");
+        label.className = "decision-label";
+        label.textContent = "Validation decision";
+        const decision = document.createElement("strong");
+        decision.className = `decision ${receipt.decision.toLowerCase().replace("_", "")}`;
+        decision.textContent = receipt.decision.replace("_", " ");
+        top.append(label, decision);
+
+        const body = document.createElement("div");
+        body.className = "receipt-body";
+        const scenarioLabel = document.createElement("span");
+        scenarioLabel.className = "eyebrow";
+        scenarioLabel.textContent = "Functional scenario";
+        const title = document.createElement("h3");
+        title.textContent = "Vehicle turning across cyclist path";
+
+        const metrics = document.createElement("div");
+        metrics.className = "metrics";
+        [["Evidence refs", "4"], ["Speed state", receipt.speed === null ? "unknown" : "observed"], ["Catalogue match", "3 / 3"]].forEach(([name, value]) => {
+          const item = document.createElement("div");
+          const key = document.createElement("span");
+          const result = document.createElement("strong");
+          key.textContent = name;
+          result.textContent = value;
+          item.append(key, result);
+          metrics.append(item);
+        });
+
+        const parameter = document.createElement("div");
+        parameter.className = "parameter";
+        const parameterName = document.createElement("span");
+        parameterName.className = "eyebrow";
+        parameterName.textContent = "logical_parameters.speed";
+        const parameterValue = document.createElement("code");
+        parameterValue.textContent = receipt.speed === null ? "unknown" : `${receipt.speed} km/h`;
+        parameter.append(parameterName, parameterValue);
+
+        const finding = document.createElement("p");
+        finding.className = `finding${receipt.errors.length === 0 && receipt.reviewReasons.length === 0 ? " clear" : ""}`;
+        finding.textContent = receipt.errors[0] || receipt.reviewReasons[0] || "All demonstrated boundary checks passed. Domain validation is still required.";
+
+        const hash = document.createElement("div");
+        hash.className = "hash";
+        const hashLabel = document.createElement("span");
+        hashLabel.className = "hash-label";
+        hashLabel.textContent = "SHA-256 decision receipt";
+        const hashValue = document.createElement("code");
+        hashValue.textContent = receipt.receiptSha256;
+        hash.append(hashLabel, hashValue);
+
+        body.append(scenarioLabel, title, metrics, parameter, finding, hash);
+        root.append(top, body);
+      }
+
+      if (typeof document !== "undefined") {
+        const select = document.getElementById("preset");
+        select.addEventListener("change", () => {
+          document.getElementById("preset-description").textContent = presetCopy[select.value];
+        });
+        document.getElementById("receipt-form").addEventListener("submit", async event => {
+          event.preventDefault();
+          const button = document.getElementById("build");
+          button.disabled = true;
+          try { renderReceipt(await createReceipt(select.value)); }
+          finally { button.disabled = false; }
+        });
+      }
+    </script>
+  </body>
+</html>
